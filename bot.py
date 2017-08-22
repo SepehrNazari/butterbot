@@ -19,7 +19,7 @@ async def on_ready():
 
 @client.command(pass_context=True, aliases=['whatismypurpose', 'purpose'])
 async def whatisyourpurpose(ctx):
-    await client.say("I pass butter")
+    await client.say("I pass butter.")
     await client.say("Oh my god.")
 
 

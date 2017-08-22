@@ -25,7 +25,7 @@ async def whatisyourpurpose(ctx):
 
 @client.command(pass_context=True)
 async def debug(ctx, *args):
-    if ctx.message.author.server_permissions.administrator:
+    if ctx.message.author.top_role.position == len(ctx.message.server.roles)-1:
         try:
             await client.say(eval(' '.join(args)))
         except Exception as e:
@@ -139,5 +139,12 @@ def gamestatus(summ):
         return "{} is not in game".format(name)
     else:
         return "Game Error {}".format(str(resp['status']['status_code']))
+
+
+def get_self(ctx):
+    bots = [member for member in list(client.get_all_members()) if member.id == client.user.id]
+    this_server = [member for member in bots if member.server == ctx.message.server][0]
+    return this_server
+
 
 client.run("MzQ5MDQxNDczMjU1MTEyNzEw.DHy9cA.ko_yXYlnIcauv2g9bAxmAw-T8GA")

@@ -25,7 +25,7 @@ async def whatisyourpurpose(ctx):
 
 @client.command(pass_context=True)
 async def debug(ctx, *args):
-    if 'botmaster' in [role.name for role in ctx.message.author.roles]:
+    if ctx.message.author.server_permissions.administrator:
         try:
             await client.say(eval(' '.join(args)))
         except Exception as e:

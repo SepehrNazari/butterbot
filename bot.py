@@ -15,11 +15,15 @@ async def on_ready():
     print("Name: {}".format(client.user.name))
     print("ID: {}".format(client.user.id))
 
-@client.command(aliases=['whatismypurpose'])
+@client.command(aliases=['whatismypurpose', 'purpose'])
 async def whatisyourpurpose():
     await client.say("I pass butter")
     await client.say("Oh my god.")
 
+
+@client.command(pass_context=True)
+async def debug(ctx, *args):
+    await client.say(eval(' '.join(args)))
 
 @client.command(pass_context=True, aliases=['list', 'registered'])
 async def listign(ctx):

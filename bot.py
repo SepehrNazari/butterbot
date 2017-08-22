@@ -33,12 +33,6 @@ async def debug(ctx, *args):
         await bot.say("You don't have permissions for this command.")
 
 
-def get_self(ctx):
-    bots = [member for member in list(bot.get_all_members()) if member.id == bot.user.id]
-    this_server = [member for member in bots if member.server == ctx.message.server][0]
-    return this_server
-
-
 if __name__ == "__main__":
     for extension in startup_extensions:
         try:

@@ -9,29 +9,47 @@ Client = discord.Client()
 bot_prefix= "!"
 client = commands.Bot(command_prefix=bot_prefix)
 
+
 @client.event
 async def on_ready():
     print("Bot Online!")
     print("Name: {}".format(client.user.name))
     print("ID: {}".format(client.user.id))
 
-@client.command(aliases=['whatismypurpose', 'purpose'])
-async def whatisyourpurpose():
+
+@client.command(pass_context=True, aliases=['whatismypurpose', 'purpose'])
+async def whatisyourpurpose(ctx):
     await client.say("I pass butter")
     await client.say("Oh my god.")
 
 
 @client.command(pass_context=True)
 async def debug(ctx, *args):
-    await client.say(eval(' '.join(args)))
+    if 'botmaster' in [role.name for role in ctx.message.author.roles]:
+        try:
+            await client.say(eval(' '.join(args)))
+        except Exception as e:
+            await client.say(str(e))
+    else:
+        await client.say("You don't have permissions for this command.")
+
+
+@client.command(pass_context=True, aliases=['purge'])
+async def clear(ctx, count):
+    if ctx.message.author.server_permissions.manage_messages:
+        await client.purge_from(ctx.message.channel, limit=int(count)+1)
+    else:
+        await client.say("You don't have permissions for this command.")
+
 
 @client.command(pass_context=True, aliases=['list', 'registered'])
 async def listign(ctx):
-    with open('igns-{}'.format(ctx.message.server.id), 'r+') as f:
+    with open('igns/igns-{}'.format(ctx.message.server.id), 'r+') as f:
         lines = f.readlines()
     await client.say("Registered summoners:")
     for line in lines:
         await client.say(line)
+
 
 @client.command(pass_context=True, aliases=['register', 'add'])
 async def addign(ctx, *ign):
@@ -50,7 +68,7 @@ async def addign(ctx, *ign):
         await client.say("Summoner Error {}".format(str(resp['status']['status_code'])))
         return
 
-    with open('igns-{}'.format(ctx.message.server.id), 'a+') as f:
+    with open('igns/igns-{}'.format(ctx.message.server.id), 'a+') as f:
         f.write(ign+'\n')
     await client.say("{} added".format(ign))
 
@@ -72,14 +90,14 @@ async def removeign(ctx, *ign):
         await client.say("Summoner Error {}".format(str(resp['status']['status_code'])))
         return
 
-    with open('igns-{}'.format(ctx.message.server.id), 'r+') as f:
+    with open('igns/igns-{}'.format(ctx.message.server.id), 'r+') as f:
         lines = f.readlines()
     if ign+'\n' in lines:
         lines.remove(ign+'\n')
     else:
         await client.say("{} is not on my summoner list".format(ign))
         return
-    with open('igns-{}'.format(ctx.message.server.id), 'w') as f:
+    with open('igns/igns-{}'.format(ctx.message.server.id), 'w') as f:
         f.writelines(lines)
     await client.say("{} removed".format(ign))
 
@@ -91,7 +109,7 @@ async def checkingame(ctx, *ign):
         await client.say(gamestatus(ign))
     else:
         s = set()
-        with open('igns-{}'.format(ctx.message.server.id), 'r+') as f:
+        with open('igns/igns-{}'.format(ctx.message.server.id), 'r+') as f:
             for line in f:
                 s.add(line.replace('\n', '').lower())
         for ign in s:

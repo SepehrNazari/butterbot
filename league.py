@@ -24,7 +24,7 @@ class LeagueofLegends():
 
     @commands.command(pass_context=True, aliases=['register', 'add'],
                     help="add a LoL ign to server list")
-    async def addign(self, ctx, *ign):
+    async def add_ign(self, ctx, *ign):
         ign = ' '.join(ign)
 
         resp = requests.get(
@@ -46,7 +46,7 @@ class LeagueofLegends():
 
     @commands.command(pass_context=True, aliases=['delete', 'remove'],
                     help="remove a LoL ign from server list")
-    async def removeign(self, ctx, *ign):
+    async def remove_ign(self, ctx, *ign):
         ign = ' '.join(ign)
 
         resp = requests.get(
@@ -76,7 +76,7 @@ class LeagueofLegends():
 
     @commands.command(pass_context=True, aliases=['ingame'],
                     help="check if all saved igns are in-game")
-    async def checkingame(self, ctx, *ign):
+    async def check_ingame(self, ctx, *ign):
         if ign:
             ign = ' '.join(ign)
             await self.bot.say(gamestatus(ign))

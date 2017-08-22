@@ -27,7 +27,9 @@ async def whatisyourpurpose(ctx):
 async def debug(ctx, *args):
     if ctx.message.author.top_role.position == len(ctx.message.server.roles)-1:
         try:
-            await client.say(eval(' '.join(args)))
+            out = (eval(' '.join(args)))
+            if out:
+                await client.say(str(out))
         except Exception as e:
             await client.say(str(e))
     else:

@@ -4,7 +4,7 @@ import requests
 import json
 
 
-lol_api = 'RGAPI-695ddbd2-474f-4639-a1ae-b8ba05cb8f86'
+lol_api = 'RGAPI-d9beda42-82b8-4c75-8a6d-bf4da9928e08'
 
 
 class LeagueofLegends():
@@ -14,7 +14,7 @@ class LeagueofLegends():
 
     @commands.command(pass_context=True, aliases=['list', 'registered'],
                     help="list saved LoL igns for server")
-    async def listign(self, ctx):
+    async def list_ign(self, ctx):
         with open('igns/igns-{}'.format(ctx.message.server.id), 'r+') as f:
             lines = f.readlines()
         await self.bot.say("Registered summoners:")

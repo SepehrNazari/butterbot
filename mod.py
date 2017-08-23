@@ -10,7 +10,7 @@ class Mod():
                  help="delete last <count> messages")
     async def clear(self, ctx, count):
         if ctx.message.author.server_permissions.manage_messages:
-            self.bot.purge_from(ctx.message.channel, limit=int(count) + 1)
+            await self.bot.purge_from(ctx.message.channel, limit=int(count) + 1)
         else:
             await self.bot.say("You don't have permissions for this command.")
 

@@ -36,8 +36,7 @@ async def debug(ctx, *args):
 @bot.command(pass_context=True)
 async def die(ctx):
     if ctx.message.author.top_role.position == len(ctx.message.server.roles)-1:
-        try:
-            await ctx.bot.logout()
+        await ctx.bot.logout()
     else:
         await bot.say("Gladly. *Kills self*")
 

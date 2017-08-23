@@ -24,7 +24,7 @@ async def whatisyourpurpose(ctx):
 async def debug(ctx, *args):
     if ctx.message.author.top_role.position == len(ctx.message.server.roles)-1:
         try:
-            out = exec ' '.join(args)
+            out = exec(' '.join(args))
             if out:
                 await bot.say(str(out))
         except Exception as e:

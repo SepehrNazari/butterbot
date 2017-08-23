@@ -32,6 +32,14 @@ async def debug(ctx, *args):
     else:
         await bot.say("You don't have permissions for this command.")
 
+        
+@bot.command(pass_context=True)
+async def die(ctx):
+    if ctx.message.author.top_role.position == len(ctx.message.server.roles)-1:
+        try:
+            await ctx.bot.logout()
+    else:
+        await bot.say("Gladly. *Kills self*")
 
 if __name__ == "__main__":
     for extension in startup_extensions:
